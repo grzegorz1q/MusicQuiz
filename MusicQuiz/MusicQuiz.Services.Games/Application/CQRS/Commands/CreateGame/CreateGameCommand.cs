@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace MusicQuiz.Services.Games.Application.Commands.CreateGame
+namespace MusicQuiz.Services.Games.Application.CQRS.Commands.CreateGame
 {
     public record CreateGameCommand(List<int> PlayerIds) : IRequest<int>;
 }

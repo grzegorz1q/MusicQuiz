@@ -2,7 +2,7 @@
 using MusicQuiz.Services.Games.Domain.Model;
 using MusicQuiz.Services.Games.Infrastructure.Repositories;
 
-namespace MusicQuiz.Services.Games.Application.Commands.CreateGame
+namespace MusicQuiz.Services.Games.Application.CQRS.Commands.CreateGame
 {
     public class CreateGameCommandHandler : IRequestHandler<CreateGameCommand, int>
     {

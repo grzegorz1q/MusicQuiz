@@ -1,5 +1,6 @@
+using MassTransit;
 using Microsoft.EntityFrameworkCore;
-using MusicQuiz.Services.Games.Application.Commands.CreateGame;
+using MusicQuiz.Services.Games.Application.CQRS.Commands.CreateGame;
 using MusicQuiz.Services.Games.Infrastructure.Persistence;
 using MusicQuiz.Services.Games.Infrastructure.Repositories;
 
@@ -16,6 +17,18 @@ builder.Services.AddDbContext<GamesDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(CreateGameCommandHandler).Assembly));
+
+builder.Services.AddMassTransit(x =>
+{
+    x.UsingRabbitMq((context, cfg) =>
+    {
+        cfg.Host("localhost", "/", h =>
+        {
+            h.Username("guest");
+            h.Password("guest");
+        });
+    });
+});
 
 builder.Services.AddScoped<IGameRepository, GameRepository>();
 

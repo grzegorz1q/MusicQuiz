@@ -2,7 +2,7 @@
 using MusicQuiz.Services.Games.Application.Dtos;
 using MusicQuiz.Services.Games.Infrastructure.Repositories;
 
-namespace MusicQuiz.Services.Games.Application.Queries
+namespace MusicQuiz.Services.Games.Application.CQRS.Queries
 {
     public class GetGameQueryHandler : IRequestHandler<GetGameQuery, GameDto>
     {
