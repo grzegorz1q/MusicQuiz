@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using MusicQuiz.Services.Games.Application.CQRS.Commands.AddPoints;
 using MusicQuiz.Services.Games.Application.CQRS.Commands.CreateGame;
+using MusicQuiz.Services.Games.Application.CQRS.Commands.FinishGame;
 using MusicQuiz.Services.Games.Application.CQRS.Queries;
 using MusicQuiz.Services.Games.Application.Dtos;
 using MusicQuiz.Services.Games.Domain.Exceptions;
@@ -40,7 +41,7 @@ namespace MusicQuiz.Services.Games.API.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        [HttpPatch("{id}")]
+        [HttpPatch("{id}/points")]
         public async Task<IActionResult> AddPoints(int id, AddPointsDto dto)
         {
             try
@@ -53,6 +54,23 @@ namespace MusicQuiz.Services.Games.API.Controllers
                 return NotFound(ex.Message);
             }
             catch(PlayerNotInGameException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        [HttpPost("{id}/finish")]
+        public async Task<IActionResult> FinishGame(int id)
+        {
+            try
+            {
+                await _mediator.Send(new FinishGameCommand(id));
+                return Ok();
+            }
+            catch(KeyNotFoundException ex)
             {
                 return NotFound(ex.Message);
             }

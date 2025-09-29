@@ -1,4 +1,4 @@
 ﻿namespace MusicQuiz.Services.Games.Application.Integration.Commands
 {
-    public record AwardPoints(int PlayerId, int Score);
+    public record AwardPoints(int GameId, int PlayerId, int Score);
 }

@@ -24,7 +24,7 @@ namespace MusicQuiz.Services.Games.Application.CQRS.Commands.FinishGame
             var endpoint = await _sendEndpointProvider.GetSendEndpoint(new Uri("queue:award-points"));
             foreach (var result in game.GameScores)
             {
-                await endpoint.Send(new AwardPoints(result.PlayerId, result.Score), cancellationToken);
+                await endpoint.Send(new AwardPoints(result.GameId, result.PlayerId, result.Score), cancellationToken);
             }
         }
     }
