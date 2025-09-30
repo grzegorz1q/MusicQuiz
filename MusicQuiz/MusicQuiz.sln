@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusicQuiz.Services.Games", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusicQuiz.Services.Scoreboard", "MusicQuiz.Services.Scoreboard\MusicQuiz.Services.Scoreboard.csproj", "{3C3A0387-5B71-4A95-AB86-C7C48A8C181B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusicQuiz.Messages", "MusicQuiz.Messages\MusicQuiz.Messages.csproj", "{D55EE51B-34D1-48F0-948C-34F52334210E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{3C3A0387-5B71-4A95-AB86-C7C48A8C181B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3C3A0387-5B71-4A95-AB86-C7C48A8C181B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3C3A0387-5B71-4A95-AB86-C7C48A8C181B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D55EE51B-34D1-48F0-948C-34F52334210E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D55EE51B-34D1-48F0-948C-34F52334210E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D55EE51B-34D1-48F0-948C-34F52334210E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D55EE51B-34D1-48F0-948C-34F52334210E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

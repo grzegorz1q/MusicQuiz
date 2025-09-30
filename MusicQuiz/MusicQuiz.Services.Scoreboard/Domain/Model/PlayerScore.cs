@@ -7,11 +7,11 @@
         public int GameId { get; set; }
         public int Score { get; set; }
         public DateTime RecordedAt { get; private set; } = DateTime.UtcNow;
-        public void SetScoreForPlayerInGame(int gameId, int playerId, int points)
+        public PlayerScore(int gameId, int playerId, int score)
         {
             GameId = gameId;
             PlayerId = playerId;
-            Score = points;
+            Score = score;
         }
     }
 }

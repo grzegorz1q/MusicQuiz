@@ -1,6 +1,9 @@
 using MassTransit;
 using Microsoft.EntityFrameworkCore;
+using MusicQuiz.Services.Scoreboard.Application.Integration.Consumers;
+using MusicQuiz.Services.Scoreboard.Domain.Interfaces;
 using MusicQuiz.Services.Scoreboard.Infrastructure.Persistence;
+using MusicQuiz.Services.Scoreboard.Infrastructure.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,6 +19,7 @@ builder.Services.AddDbContext<ScoreboardDbContext>(options =>
 
 builder.Services.AddMassTransit(x =>
 {
+    x.AddConsumer<AwardPointsConsumer>();
     x.UsingRabbitMq((context, cfg) =>
     {
         cfg.Host("localhost", "/", h =>
@@ -23,8 +27,14 @@ builder.Services.AddMassTransit(x =>
             h.Username("guest");
             h.Password("guest");
         });
+        cfg.ReceiveEndpoint("award-points", e =>
+        {
+            e.ConfigureConsumer<AwardPointsConsumer>(context);
+        });
     });
 });
+
+builder.Services.AddScoped<IPlayerScoreRepository, PlayerScoreRepository>();
 
 var app = builder.Build();
 

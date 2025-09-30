@@ -24,4 +24,8 @@
     <Folder Include="Controllers\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\MusicQuiz.Messages\MusicQuiz.Messages.csproj" />
+  </ItemGroup>
+
 </Project>

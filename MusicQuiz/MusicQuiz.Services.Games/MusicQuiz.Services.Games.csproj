@@ -18,11 +18,12 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="StackExchange.Redis" Version="2.9.25" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Application\Integration\Events\" />
+    <ProjectReference Include="..\MusicQuiz.Messages\MusicQuiz.Messages.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,6 +1,6 @@
 ﻿using MediatR;
+using MusicQuiz.Services.Games.Domain.Interfaces;
 using MusicQuiz.Services.Games.Domain.Model;
-using MusicQuiz.Services.Games.Infrastructure.Repositories;
 
 namespace MusicQuiz.Services.Games.Application.CQRS.Commands.CreateGame
 {
@@ -19,7 +19,7 @@ namespace MusicQuiz.Services.Games.Application.CQRS.Commands.CreateGame
             var game = new Game();
             foreach(var playerId in request.PlayerIds)
             {
-                game.GameScores.Add(new GameScore(game.Id, playerId));
+                game.GameScores.Add(new GameScore(playerId));
             }
             await _repository.AddAsync(game);
             return game.Id;

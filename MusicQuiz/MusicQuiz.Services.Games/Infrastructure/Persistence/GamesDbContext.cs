@@ -11,11 +11,11 @@ namespace MusicQuiz.Services.Games.Infrastructure.Persistence
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<Game>()
+            /*modelBuilder.Entity<Game>()
                 .HasMany(g => g.GameScores)
                 .WithOne(gs => gs.Game)
                 .HasForeignKey(gs => gs.GameId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.Cascade);*/
         }
     }
 }
