@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using MusicQuiz.Services.Identity.Application.Services;
 using MusicQuiz.Services.Identity.Domain.Model;
@@ -17,7 +16,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<AppDbContext>(options => 
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-builder.Services.AddIdentityCore<User>(options =>
+builder.Services.AddIdentity<User, IdentityRole>(options =>
 {
     options.Password.RequiredLength = 8;
     options.Password.RequireDigit = true;
@@ -27,7 +26,7 @@ builder.Services.AddIdentityCore<User>(options =>
 
 builder.Services.AddSingleton<IJwtService, JwtService>();
 
-builder.Services.AddTransient<IAccountService, AccountService>();
+builder.Services.AddScoped<IAccountService, AccountService>();
 
 var app = builder.Build();
 

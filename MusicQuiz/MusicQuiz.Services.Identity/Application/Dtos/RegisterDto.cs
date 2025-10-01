@@ -1,10 +1,16 @@
-﻿namespace MusicQuiz.Services.Identity.Application.Dtos
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace MusicQuiz.Services.Identity.Application.Dtos
 {
     public class RegisterDto
     {
-        public string Nickname { get; set; } = string.Empty;
+        [Required]
+        public string Username { get; set; } = string.Empty;
+        [Required]
         public string Email { get; set; } = string.Empty;
+        [Required]
         public string Password { get; set; } = string.Empty;
-        public string ConfirmPasswrod { get; set; } = string.Empty;
+        [Compare("Password", ErrorMessage = "Passwords do not match")]
+        public string ConfirmPassword { get; set; } = string.Empty;
     }
 }

@@ -17,15 +17,17 @@ namespace MusicQuiz.Services.Identity.Application.Services
         }
         public async Task<string> LoginAsync(LoginDto dto)
         {
-            var user = await _userManager.FindByNameAsync(dto.Nickname) ?? throw new UnauthorizedAccessException("Invalid nickname or password");
-            var result = await _signInManager.CheckPasswordSignInAsync(user, dto.Password, false) ?? throw new UnauthorizedAccessException("Invalid nickname or password");
+            var user = await _userManager.FindByNameAsync(dto.Username) ?? throw new UnauthorizedAccessException("Invalid nickname or password");
+            var result = await _signInManager.CheckPasswordSignInAsync(user, dto.Password, false);
+            if (!result.Succeeded)
+                throw new UnauthorizedAccessException("Invalid nickname or password");
             return _jwtService.GenerateToken(user);
         }
 
-        public async Task RegisterAsync(RegisterDto dto)
+        public async Task<IdentityResult> RegisterAsync(RegisterDto dto)
         {
-            var user = new User { UserName = dto.Nickname, Email = dto.Email, Nickname = dto.Nickname };
-            await _userManager.CreateAsync(user, dto.Password);
+            var user = new User { UserName = dto.Username, Email = dto.Email};
+            return await _userManager.CreateAsync(user, dto.Password);
         }
     }
 }

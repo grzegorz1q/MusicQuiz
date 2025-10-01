@@ -35,7 +35,12 @@ namespace MusicQuiz.Services.Identity.API
         {
             try
             {
-                await _accountService.RegisterAsync(dto);
+                var result = await _accountService.RegisterAsync(dto);
+                if (!result.Succeeded)
+                {
+                    var errors = result.Errors.Select(e => e.Description).ToList();
+                    return BadRequest(new { errors });
+                }
                 return Ok();
             }
             catch(Exception ex)

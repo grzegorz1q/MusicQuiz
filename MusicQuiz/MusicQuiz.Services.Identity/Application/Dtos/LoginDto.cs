@@ -1,10 +1,13 @@
 ﻿using Microsoft.Identity.Client;
+using System.ComponentModel.DataAnnotations;
 
 namespace MusicQuiz.Services.Identity.Application.Dtos
 {
     public class LoginDto
     {
-        public string Nickname { get; set; } = string.Empty;
+        [Required]
+        public string Username { get; set; } = string.Empty;
+        [Required]
         public string Password { get; set; } = string.Empty;
     }
 }

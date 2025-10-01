@@ -18,7 +18,7 @@ namespace MusicQuiz.Services.Identity.Application.Services
             var claims = new[]
             {
                 new Claim(JwtRegisteredClaimNames.Sub, user.Id),
-                new Claim(JwtRegisteredClaimNames.Name, user.Nickname),
+                new Claim(JwtRegisteredClaimNames.Name, user.UserName!),
             };
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]!));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
