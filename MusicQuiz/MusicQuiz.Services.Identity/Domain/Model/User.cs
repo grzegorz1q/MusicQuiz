@@ -2,7 +2,7 @@
 
 namespace MusicQuiz.Services.Identity.Domain.Model
 {
-    public class User : IdentityUser
+    public class User : IdentityUser<int>
     {
     }
 }

@@ -1,13 +1,6 @@
-﻿using Microsoft.Identity.Client;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace MusicQuiz.Services.Identity.Application.Dtos
 {
-    public class LoginDto
-    {
-        [Required]
-        public string Username { get; set; } = string.Empty;
-        [Required]
-        public string Password { get; set; } = string.Empty;
-    }
+    public record LoginDto([Required]  string Username, [Required]  string Password);
 }

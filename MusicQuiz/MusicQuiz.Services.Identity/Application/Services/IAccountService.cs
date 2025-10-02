@@ -7,5 +7,7 @@ namespace MusicQuiz.Services.Identity.Application.Services
     {
         Task<string> LoginAsync(LoginDto dto);
         Task<IdentityResult> RegisterAsync(RegisterDto dto);
+        Task<UserDto> GetUserAsync(int id);
+        Task<IEnumerable<UserDto>> GetAllUsersAsync();
     }
 }

@@ -16,7 +16,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<AppDbContext>(options => 
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-builder.Services.AddIdentity<User, IdentityRole>(options =>
+builder.Services.AddIdentity<User, IdentityRole<int>>(options =>
 {
     options.Password.RequiredLength = 8;
     options.Password.RequireDigit = true;
@@ -28,6 +28,8 @@ builder.Services.AddSingleton<IJwtService, JwtService>();
 
 builder.Services.AddScoped<IAccountService, AccountService>();
 
+builder.Services.AddTransient<UsersSeed>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -35,6 +37,12 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+}
+
+using (var scope = app.Services.CreateScope())
+{
+    var seeder = scope.ServiceProvider.GetRequiredService<UsersSeed>();
+    await seeder.SeedAsync();
 }
 
 app.UseHttpsRedirection();
