@@ -18,7 +18,7 @@ namespace MusicQuiz.Services.Games.Application.CQRS.Queries
                 game.Id,
                 game.CurrentRound,
                 game.StartedAt,
-                game.GameScores.Select(gs => new GameScoreDto(
+                game.PlayerScores.Select(gs => new PlayerScoreDto(
                     gs.Score,
                     gs.PlayerId)
                 ).ToList()

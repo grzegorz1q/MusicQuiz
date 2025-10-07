@@ -19,7 +19,7 @@ namespace MusicQuiz.Services.Games.Application.CQRS.Commands.CreateGame
             var game = new Game();
             foreach(var playerId in request.PlayerIds)
             {
-                game.GameScores.Add(new GameScore(playerId));
+                game.PlayerScores.Add(new PlayerScore(playerId));
             }
             await _repository.AddAsync(game);
             return game.Id;

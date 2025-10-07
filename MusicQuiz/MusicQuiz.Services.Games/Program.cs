@@ -1,8 +1,6 @@
 using MassTransit;
-using Microsoft.EntityFrameworkCore;
 using MusicQuiz.Services.Games.Application.CQRS.Commands.CreateGame;
 using MusicQuiz.Services.Games.Domain.Interfaces;
-using MusicQuiz.Services.Games.Infrastructure.Persistence;
 using MusicQuiz.Services.Games.Infrastructure.Repositories;
 using StackExchange.Redis;
 

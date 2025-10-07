@@ -25,6 +25,18 @@
       "UpstreamHttpMethod": [ "Post" ]
     },
     {
+      "DownstreamPathTemplate": "/api/games/{id}/finish",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7249
+        }
+      ],
+      "UpstreamPathTemplate": "/games/{id}/finish",
+      "UpstreamHttpMethod": [ "Post" ]
+    },
+    {
       "DownstreamPathTemplate": "/api/account/users",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [

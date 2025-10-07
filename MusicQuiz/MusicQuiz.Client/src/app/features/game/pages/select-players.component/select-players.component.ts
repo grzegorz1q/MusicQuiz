@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { User } from '../../../../models/player.model';
+import { User } from '../../../../models/user.model';
 import { AccountService } from '../../../../services/account/account.service';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { GameService } from '../../../../services/game/game.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-select-players.component',
@@ -15,7 +16,7 @@ export class SelectPlayersComponent implements OnInit {
   selectedPlayers: User[] = [];
   availablePlayers: User[] = [];
 
-  constructor(private accountService: AccountService, private gameService: GameService, private fb: FormBuilder) {}
+  constructor(private accountService: AccountService, private gameService: GameService, private fb: FormBuilder, private router: Router) {}
   
   ngOnInit(){
     this.getAllUsers();
@@ -65,6 +66,7 @@ export class SelectPlayersComponent implements OnInit {
     this.gameService.createGame(playerIds).subscribe({
       next: (response) => {
         console.log(response);
+        this.router.navigate(['round-one', response])
       },
       error: (error) =>{
         console.error(error);

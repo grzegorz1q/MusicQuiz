@@ -25,7 +25,7 @@ namespace MusicQuiz.Services.Games.Infrastructure.Repositories
 
         public async Task<Game?> GetByIdAsync(int id)
         {
-            return await _context.Games.Include(g => g.GameScores).FirstOrDefaultAsync(g => g.Id == id);
+            return await _context.Games.Include(g => g.PlayerScores).FirstOrDefaultAsync(g => g.Id == id);
         }
 
         public async Task UpdateAsync(Game game)

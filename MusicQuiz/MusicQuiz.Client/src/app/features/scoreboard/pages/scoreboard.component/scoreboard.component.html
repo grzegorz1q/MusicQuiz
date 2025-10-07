@@ -1,0 +1,16 @@
+<table>
+  <thead>
+    <th>Player</th>
+    <th>Score</th>
+    <th>Games played</th>
+  </thead>
+  <tbody>
+    @for (score of scoreboard; track $index) {
+      <tr>
+        <td>{{ score.username }}</td>
+        <td>{{ score.totalScore }}</td>
+        <td>{{ score.gamesPlayed }}</td>
+      </tr>
+    }
+  </tbody>
+</table>

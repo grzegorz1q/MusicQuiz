@@ -19,7 +19,7 @@ namespace MusicQuiz.Services.Games.Application.CQRS.Commands.FinishGame
             var game = await _repository.GetByIdAsync(request.Id) ?? throw new KeyNotFoundException("Game not found");
 
             var endpoint = await _sendEndpointProvider.GetSendEndpoint(new Uri("queue:award-points"));
-            foreach (var result in game.GameScores)
+            foreach (var result in game.PlayerScores)
             {
                 await endpoint.Send(new AwardPoints(game.Id, result.PlayerId, result.Score), cancellationToken);
             }

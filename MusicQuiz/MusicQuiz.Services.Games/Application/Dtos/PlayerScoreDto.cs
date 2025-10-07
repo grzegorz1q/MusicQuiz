@@ -1,4 +1,4 @@
 ﻿namespace MusicQuiz.Services.Games.Application.Dtos
 {
-    public record GameScoreDto(int Score, int PlayerId);
+    public record PlayerScoreDto(int Score, int PlayerId);
 }

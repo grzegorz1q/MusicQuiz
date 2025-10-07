@@ -4,5 +4,5 @@
         int Id, 
         int CurrentRound, 
         DateTime StartedAt, 
-        List<GameScoreDto> GameScores);
+        List<PlayerScoreDto> PlayerScores);
 }

@@ -1,14 +1,14 @@
 ﻿namespace MusicQuiz.Services.Games.Domain.Model
 {
-    public class GameScore
+    public class PlayerScore
     {
-        public int Score { get; set; }
+        public int Score { get; set; } = 0;
         public int PlayerId { get; set; }
-        public GameScore() { }
-        public GameScore(int playerId)
+        public bool IsActive { get; set; } = true;
+        public PlayerScore() { }
+        public PlayerScore(int playerId)
         {
             PlayerId = playerId;
-            Score = 0;
         }
         public void AddPoints(int value)
         {

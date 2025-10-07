@@ -1,5 +1,6 @@
 using MassTransit;
 using Microsoft.EntityFrameworkCore;
+using MusicQuiz.Services.Scoreboard.Application.CQRS.Queries;
 using MusicQuiz.Services.Scoreboard.Application.Integration.Consumers;
 using MusicQuiz.Services.Scoreboard.Domain.Interfaces;
 using MusicQuiz.Services.Scoreboard.Infrastructure.Persistence;
@@ -13,6 +14,8 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(GetScoreboardQueryHandler).Assembly));
 
 builder.Services.AddDbContext<ScoreboardDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
