@@ -13,13 +13,13 @@ namespace MusicQuiz.API.Controllers
             _gameService = gameService;
         }
 
-        [HttpGet("{id}/players")]
-        public async Task<IActionResult> GetCurrentPlayers(int id)
+        [HttpGet("{id}/state")]
+        public async Task<IActionResult> GetGameState(int id)
         {
             try
             {
-                var currentPlayers = await _gameService.GetCurrentPlayers(id);
-                return Ok(currentPlayers);
+                var gameState = await _gameService.GetGameState(id);
+                return Ok(gameState);
             }
             catch (KeyNotFoundException ex)
             {

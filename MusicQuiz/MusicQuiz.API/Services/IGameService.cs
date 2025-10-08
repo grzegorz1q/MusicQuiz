@@ -4,6 +4,6 @@ namespace MusicQuiz.API.Services
 {
     public interface IGameService
     {
-        Task<IEnumerable<PlayerDto>> GetCurrentPlayers(int gameId);
+        Task<GameDto> GetGameState(int id);
     }
 }

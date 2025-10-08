@@ -1,3 +1,8 @@
-@for (user of players; track $index) {
-    <li>{{user.username}}</li>
+@if (!game) {
+  <p>Loading...</p>
+} @else {
+  <h1>Started at: {{ game.startedAt }}</h1>
+  @for (user of game.playerScores; track $index) {
+    <li>{{ user.username }} - {{ user.score }}</li>
+  }
 }
