@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using MusicQuiz.Services.Games.Domain.Interfaces;
 using MusicQuiz.Services.Games.Domain.Model;
 using MusicQuiz.Services.Games.Infrastructure.Persistence;
 
@@ -17,9 +18,14 @@ namespace MusicQuiz.Services.Games.Infrastructure.Repositories
             await _context.SaveChangesAsync();
         }
 
+        public Task DeleteAsync(int id)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<Game?> GetByIdAsync(int id)
         {
-            return await _context.Games.Include(g => g.GameScores).FirstOrDefaultAsync(g => g.Id == id);
+            return await _context.Games.Include(g => g.PlayerScores).FirstOrDefaultAsync(g => g.Id == id);
         }
 
         public async Task UpdateAsync(Game game)

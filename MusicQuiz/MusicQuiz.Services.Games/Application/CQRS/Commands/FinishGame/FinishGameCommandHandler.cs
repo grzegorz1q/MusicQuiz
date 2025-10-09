@@ -1,7 +1,7 @@
 ﻿using MassTransit;
 using MediatR;
-using MusicQuiz.Services.Games.Application.Integration.Commands;
-using MusicQuiz.Services.Games.Infrastructure.Repositories;
+using MusicQuiz.Messages.Commands.Games;
+using MusicQuiz.Services.Games.Domain.Interfaces;
 
 namespace MusicQuiz.Services.Games.Application.CQRS.Commands.FinishGame
 {
@@ -17,15 +17,13 @@ namespace MusicQuiz.Services.Games.Application.CQRS.Commands.FinishGame
         public async Task Handle(FinishGameCommand request, CancellationToken cancellationToken)
         {
             var game = await _repository.GetByIdAsync(request.Id) ?? throw new KeyNotFoundException("Game not found");
-            game.FinishGame();
-
-            await _repository.UpdateAsync(game);
 
             var endpoint = await _sendEndpointProvider.GetSendEndpoint(new Uri("queue:award-points"));
-            foreach (var result in game.GameScores)
+            foreach (var result in game.PlayerScores)
             {
-                await endpoint.Send(new AwardPoints(result.PlayerId, result.Score), cancellationToken);
+                await endpoint.Send(new AwardPoints(game.Id, result.PlayerId, result.Score), cancellationToken);
             }
+            await _repository.DeleteAsync(game.Id);
         }
     }
 }

@@ -1,0 +1,25 @@
+<form [formGroup]="form" (ngSubmit)="submit()">
+  <label for="playerSelect">Select player:</label>
+  <select formControlName="playerSelect" id="playerSelect">
+    <option [ngValue]="null" disabled selected>-- Select --</option>
+    @for (player of availablePlayers; track $index) {
+      <option [ngValue]="player">
+        {{player.username}}
+      </option>
+    }
+  </select>
+  <button type="button" (click)="addPlayer(form.value.playerSelect)" [disabled]="!form.value.playerSelect">
+    Add player
+  </button>
+
+  <h3>Selected players:</h3>
+  <ul>
+    @for (player of selectedPlayers; track $index) {
+      <li>
+        {{player.username}}
+        <button type="button" (click)="removePlayer(player)">Remove</button>
+      </li>
+    }
+  </ul>
+  <button type="submit">Start game</button>
+</form>

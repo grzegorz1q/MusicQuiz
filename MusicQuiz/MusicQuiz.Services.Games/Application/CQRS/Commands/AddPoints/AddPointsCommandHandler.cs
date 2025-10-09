@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using MusicQuiz.Services.Games.Infrastructure.Repositories;
+using MusicQuiz.Services.Games.Domain.Interfaces;
 
 namespace MusicQuiz.Services.Games.Application.CQRS.Commands.AddPoints
 {

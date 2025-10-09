@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using MusicQuiz.Services.Games.Application.Dtos;
-using MusicQuiz.Services.Games.Infrastructure.Repositories;
+using MusicQuiz.Services.Games.Domain.Interfaces;
 
 namespace MusicQuiz.Services.Games.Application.CQRS.Queries
 {
@@ -16,14 +16,10 @@ namespace MusicQuiz.Services.Games.Application.CQRS.Queries
             var game = await _repository.GetByIdAsync(request.Id) ?? throw new KeyNotFoundException("Game not found");
             var gameDto = new GameDto(
                 game.Id,
-                game.GameStatus.ToString(),
                 game.CurrentRound,
                 game.StartedAt,
-                game.FinishedAt,
-                game.GameScores.Select(gs => new GameScoreDto(
-                    gs.Id,
+                game.PlayerScores.Select(gs => new PlayerScoreDto(
                     gs.Score,
-                    gs.GameId,
                     gs.PlayerId)
                 ).ToList()
             );

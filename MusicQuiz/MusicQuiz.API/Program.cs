@@ -1,3 +1,4 @@
+using MusicQuiz.API.Services;
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
 
@@ -18,6 +19,21 @@ builder.Configuration
 builder.Services
       .AddOcelot(builder.Configuration);
 
+builder.Services.AddHttpClient();
+builder.Services.AddScoped<IScoreboardService, ScoreboardService>();
+builder.Services.AddScoped<IGameService, GameService>();
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowOrigin",
+        builder => builder.WithOrigins(
+            "http://localhost:4200")
+        .AllowAnyHeader()
+        .AllowAnyMethod()
+        .AllowCredentials()
+        );
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -27,12 +43,20 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-await app.UseOcelot();
+app.UseCors("AllowOrigin");
 
 //app.UseHttpsRedirection();
 
 //app.UseAuthorization();
+app.UseRouting();
+#pragma warning disable ASP0014 // Suggest using top level route registrations
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllers();
+});
+#pragma warning restore ASP0014 // Suggest using top level route registrations
+                               //app.MapControllers();
 
-//app.MapControllers();
+await app.UseOcelot();
 
 app.Run();

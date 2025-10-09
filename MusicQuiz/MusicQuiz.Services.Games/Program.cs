@@ -1,8 +1,8 @@
 using MassTransit;
-using Microsoft.EntityFrameworkCore;
 using MusicQuiz.Services.Games.Application.CQRS.Commands.CreateGame;
-using MusicQuiz.Services.Games.Infrastructure.Persistence;
+using MusicQuiz.Services.Games.Domain.Interfaces;
 using MusicQuiz.Services.Games.Infrastructure.Repositories;
+using StackExchange.Redis;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,8 +13,11 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddDbContext<GamesDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+//builder.Services.AddDbContext<GamesDbContext>(options =>
+//    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddSingleton<IConnectionMultiplexer>(
+    sp => ConnectionMultiplexer.Connect("localhost:6379"));
 
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(CreateGameCommandHandler).Assembly));
 
@@ -30,7 +33,8 @@ builder.Services.AddMassTransit(x =>
     });
 });
 
-builder.Services.AddScoped<IGameRepository, GameRepository>();
+//builder.Services.AddScoped<IGameRepository, GameRepository>();
+builder.Services.AddScoped<IGameRepository, RedisGameRepository>();
 
 var app = builder.Build();
 
