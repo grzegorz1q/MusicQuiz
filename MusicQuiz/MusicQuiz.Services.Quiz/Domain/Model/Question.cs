@@ -8,5 +8,7 @@
         public Category Category { get; set; } = default!;
         public int CorrectAnswerId { get; set; }
         public Answer CorrectAnswer { get; set; } = default!;
+        public int SingerId { get; set; }
+        public Singer Singer { get; set; } = default!;
     }
 }

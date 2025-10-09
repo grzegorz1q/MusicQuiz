@@ -13,9 +13,12 @@ namespace MusicQuiz.API.Services
         }
         public async Task<GameDto> GetGameState(int id)
         {
-            var game = await _httpClient.GetFromJsonAsync<GameEntryDto>($"{_gamesUrl}/{id}") ?? throw new KeyNotFoundException("Game not found!");
-            var users = await _httpClient.GetFromJsonAsync<IEnumerable<UserDto>>(_identityUsersUrl);
-            if (users == null || !users.Any()) throw new KeyNotFoundException("Users list is empty");
+            var gameTask = _httpClient.GetFromJsonAsync<GameEntryDto>($"{_gamesUrl}/{id}");
+            var usersTask = _httpClient.GetFromJsonAsync<IEnumerable<UserDto>>(_identityUsersUrl);
+
+            await Task.WhenAll(gameTask, usersTask);
+            var game = gameTask.Result ?? throw new KeyNotFoundException("Game not found!");
+            var users = usersTask.Result ?? throw new KeyNotFoundException("Users list is empty");
 
             return new GameDto(
                 game.Id,

@@ -3,7 +3,6 @@
     public enum CategoryType
     {
         Year,
-        Artist,
         Title,
         Text
     }

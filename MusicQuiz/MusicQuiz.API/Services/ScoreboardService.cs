@@ -13,17 +13,13 @@ namespace MusicQuiz.API.Services
         }
         public async Task<IEnumerable<ScoreboardDto>> GetScoreboardAsync()
         {
-            var users = await _httpClient.GetFromJsonAsync<IEnumerable<UserDto>>(_identityUsersUrl);
-            if (users == null || !users.Any())
-            {
-                throw new KeyNotFoundException("Users list is empty");
-            }
+            var usersTask = _httpClient.GetFromJsonAsync<IEnumerable<UserDto>>(_identityUsersUrl);
+            var scoreboardTask = _httpClient.GetFromJsonAsync<IEnumerable<ScoreboardEntryDto>>(_scoreboardUrl);
 
-            var scoreboard = await _httpClient.GetFromJsonAsync<IEnumerable<ScoreboardEntryDto>>(_scoreboardUrl);
-            if(scoreboard == null || !scoreboard.Any())
-            {
-                throw new KeyNotFoundException("Scoreboard list is empty");
-            }
+            await Task.WhenAll(usersTask, scoreboardTask);
+
+            var users = usersTask.Result ?? throw new KeyNotFoundException("Users list is empty");
+            var scoreboard = scoreboardTask.Result ?? throw new KeyNotFoundException("Scoreboard list is empty");
 
             return scoreboard.Select(s => new ScoreboardDto(
                     users.FirstOrDefault(u => u.Id == s.PlayerId)?.Username ?? "Unknown",
