@@ -66,7 +66,9 @@ export class SelectPlayersComponent implements OnInit {
     this.gameService.createGame(playerIds).subscribe({
       next: (response) => {
         console.log(response);
-        this.router.navigate(['round-one', response])
+        this.router.navigate(['round-one', response.id],{
+          state: {response}
+        });
       },
       error: (error) =>{
         console.error(error);

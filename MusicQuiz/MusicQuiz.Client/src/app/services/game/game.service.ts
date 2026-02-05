@@ -11,10 +11,10 @@ export class GameService {
   private readonly apiUrl = `${environment.apiUrl}/games`;
   constructor(private http: HttpClient) {}
 
-  createGame(playerIds: number[]): Observable<number>{
-    return this.http.post<number>(`${this.apiUrl}`, { playerIds });
+  createGame(playerIds: number[]): Observable<Game>{
+    return this.http.post<Game>(`${this.apiUrl}`, { playerIds });
   }
-  getGameState(id: number): Observable<Game>{
-    return this.http.get<Game>(`${this.apiUrl}/${id}/state`);
-  }
+  // getGameState(id: number): Observable<Game>{
+  //   return this.http.get<Game>(`${this.apiUrl}/${id}/state`);
+  // }
 }

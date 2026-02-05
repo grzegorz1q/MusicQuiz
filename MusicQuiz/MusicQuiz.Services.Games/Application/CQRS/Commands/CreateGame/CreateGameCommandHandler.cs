@@ -1,17 +1,18 @@
 ﻿using MediatR;
+using MusicQuiz.Services.Games.Application.Dtos;
 using MusicQuiz.Services.Games.Domain.Interfaces;
 using MusicQuiz.Services.Games.Domain.Model;
 
 namespace MusicQuiz.Services.Games.Application.CQRS.Commands.CreateGame
 {
-    public class CreateGameCommandHandler : IRequestHandler<CreateGameCommand, int>
+    public class CreateGameCommandHandler : IRequestHandler<CreateGameCommand, GameDto>
     {
         private readonly IGameRepository _repository;
         public CreateGameCommandHandler(IGameRepository repository)
         {
             _repository = repository;
         }
-        public async Task<int> Handle(CreateGameCommand request, CancellationToken cancellationToken)
+        public async Task<GameDto> Handle(CreateGameCommand request, CancellationToken cancellationToken)
         {
             if (request.PlayerIds == null || request.PlayerIds.Count == 0)
                 throw new ArgumentException("At least one player is required to create a game."); // change to custom exception ?
@@ -22,7 +23,15 @@ namespace MusicQuiz.Services.Games.Application.CQRS.Commands.CreateGame
                 game.PlayerScores.Add(new PlayerScore(playerId));
             }
             await _repository.AddAsync(game);
-            return game.Id;
+            return new GameDto(
+                game.Id,
+                game.CurrentRound,
+                game.StartedAt,
+                game.PlayerScores.Select(ps => new PlayerScoreDto(
+                    ps.Score,
+                    ps.PlayerId
+                )).ToList()
+            );
         }
     }
 }

@@ -10,26 +10,26 @@ import { GameService } from '../../../../services/game/game.service';
   styleUrl: './round-one.component.scss',
 })
 export class RoundOneComponent implements OnInit {
-  gameId!: number;
+  //gameId!: number;
   game!: Game;
 
   constructor(private route: ActivatedRoute, private gameService: GameService){}
 
   ngOnInit(){
-    this.gameId = Number(this.route.snapshot.paramMap.get('id'));
-    console.log('Loaded game ID: ', this.gameId);
-    this.getGameState(this.gameId);
+    const navigate = history.state;
+    this.game = navigate.response;
+    console.log('Loaded game', this.game);
   }
-  getGameState(id: number){
-    this.gameService.getGameState(id).subscribe({
-      next: (response) => {
-        this.game = response;
-        console.log(response);
-      },
-      error: (error) => {
-        console.error(error);
-      }
-    })
-  }
+  // getGameState(id: number){
+  //   this.gameService.getGameState(id).subscribe({
+  //     next: (response) => {
+  //       this.game = response;
+  //       console.log(response);
+  //     },
+  //     error: (error) => {
+  //       console.error(error);
+  //     }
+  //   })
+  // }
   
 }

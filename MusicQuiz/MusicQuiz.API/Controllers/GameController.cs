@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using MusicQuiz.API.Dtos;
 using MusicQuiz.API.Services;
 
 namespace MusicQuiz.API.Controllers
@@ -13,7 +14,7 @@ namespace MusicQuiz.API.Controllers
             _gameService = gameService;
         }
 
-        [HttpGet("{id}/state")]
+        /*[HttpGet("{id}/state")]
         public async Task<IActionResult> GetGameState(int id)
         {
             try
@@ -26,6 +27,23 @@ namespace MusicQuiz.API.Controllers
                 return NotFound(ex.Message);
             }
             catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }*/
+        [HttpPost]
+        public async Task<IActionResult> CreateGame(CreateGameDto createGameDto)
+        {
+            try
+            {
+                var game = await _gameService.CreateGame(createGameDto);
+                return Ok(game);
+            }
+            catch(KeyNotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch(Exception ex) 
             {
                 return BadRequest(ex.Message);
             }

@@ -21,8 +21,8 @@ namespace MusicQuiz.Services.Games.API.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateGame(CreateGameCommand command)
         {
-            var id = await _mediator.Send(command);
-            return Ok(id);
+            var game = await _mediator.Send(command);
+            return Ok(game);
         }
         [HttpGet("{id}")]
         public async Task<IActionResult> GetGame(int id)
