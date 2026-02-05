@@ -11,7 +11,7 @@ using MusicQuiz.Services.Quiz.Infrastructure.Persistence;
 namespace MusicQuiz.Services.Quiz.Migrations
 {
     [DbContext(typeof(QuizDbContext))]
-    [Migration("20251009163716_InitialCreate")]
+    [Migration("20260204200423_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -39,9 +39,14 @@ namespace MusicQuiz.Services.Quiz.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("SingerId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
+
+                    b.HasIndex("SingerId");
 
                     b.ToTable("Answers");
                 });
@@ -80,13 +85,35 @@ namespace MusicQuiz.Services.Quiz.Migrations
                     b.Property<int>("CorrectAnswerId")
                         .HasColumnType("int");
 
+                    b.Property<int>("SingerId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
 
                     b.HasIndex("CorrectAnswerId");
 
+                    b.HasIndex("SingerId");
+
                     b.ToTable("Questions");
+                });
+
+            modelBuilder.Entity("MusicQuiz.Services.Quiz.Domain.Model.Singer", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Singers");
                 });
 
             modelBuilder.Entity("MusicQuiz.Services.Quiz.Domain.Model.Answer", b =>
@@ -97,7 +124,15 @@ namespace MusicQuiz.Services.Quiz.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("MusicQuiz.Services.Quiz.Domain.Model.Singer", "Singer")
+                        .WithMany("Answers")
+                        .HasForeignKey("SingerId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.Navigation("Category");
+
+                    b.Navigation("Singer");
                 });
 
             modelBuilder.Entity("MusicQuiz.Services.Quiz.Domain.Model.Question", b =>
@@ -114,12 +149,27 @@ namespace MusicQuiz.Services.Quiz.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("MusicQuiz.Services.Quiz.Domain.Model.Singer", "Singer")
+                        .WithMany("Questions")
+                        .HasForeignKey("SingerId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.Navigation("Category");
 
                     b.Navigation("CorrectAnswer");
+
+                    b.Navigation("Singer");
                 });
 
             modelBuilder.Entity("MusicQuiz.Services.Quiz.Domain.Model.Category", b =>
+                {
+                    b.Navigation("Answers");
+
+                    b.Navigation("Questions");
+                });
+
+            modelBuilder.Entity("MusicQuiz.Services.Quiz.Domain.Model.Singer", b =>
                 {
                     b.Navigation("Answers");
 
